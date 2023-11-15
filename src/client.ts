@@ -1,6 +1,11 @@
 import { Client, GatewayIntentBits, Collection } from 'discord.js';
+import { commandsManager } from './classes/commandsManager';
 
-const client = new Client({
+class botClient extends Client {
+    commands = new commandsManager();
+}
+
+const client = new botClient({
     intents: [
         GatewayIntentBits.AutoModerationConfiguration,
         GatewayIntentBits.AutoModerationExecution,
@@ -23,6 +28,4 @@ const client = new Client({
         GatewayIntentBits.MessageContent ],
 });
 
-(client as any).commands = new Collection();
-
-export = client
+export = client;
