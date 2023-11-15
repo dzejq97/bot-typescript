@@ -7,7 +7,7 @@ export = {
     once: false,
     execute(message: Message) {
 
-        if (message.content.startsWith(prefix)) {
+        if (message.content.startsWith(prefix) && message.content.length >= 2) {
             client.commands.seekCommand(message);
             return;
         }
