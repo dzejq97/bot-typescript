@@ -3,12 +3,11 @@ import CommandContext from "src/classes/commandContext";
 
 export const command: ICommand = {
     meta: {
-        name: 'ping',
-        aliases: ['pong', 'test'],
-        description: "Reply with 'Pong!'"
+        name: 'hello',
+        aliases: ['hi', 'yo'],
+        description: "Say hi to someone!"
     },
     execute(context: CommandContext) {
-        context.directMessage.reply('Pong!');
         console.log(context.arguments);
     }
 }

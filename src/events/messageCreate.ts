@@ -6,11 +6,8 @@ export = {
     name: Events.MessageCreate,
     once: false,
     execute(message: Message) {
+        if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-        if (message.content.startsWith(prefix) && message.content.length >= 2) {
-            client.commands.seekCommand(message);
-            return;
-        }
-        return;
+        client.commands.seekCommand(message);
     }
 }

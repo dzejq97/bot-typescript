@@ -21,10 +21,8 @@ export class commandsManager {
     public async seekCommand(message: Message) {
         //await message.delete();
 
-        const commandArgs: string[] = message.content.split(' ');
-        let commandName = commandArgs[0];
-        commandName = commandName.substring(1);
-        delete commandArgs[0];
+        let commandArgs: string[] = message.content.substring(1).trim().split('/ +/');
+        let commandName = commandArgs.shift()?.toLowerCase()
 
         this.commands.forEach((value, key) => {
             if (value.meta.name === commandName) {
