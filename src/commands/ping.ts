@@ -1,4 +1,5 @@
 import { ICommand } from "src/classes/ICommand";
+import CommandContext from "src/classes/commandContext";
 import { Message } from 'discord.js'
 
 export const command: ICommand = {
@@ -6,7 +7,7 @@ export const command: ICommand = {
         name: 'ping',
         aliases: ['pong', 'test'],
     },
-    execute(message: Message, args: string[]) {
-        message.reply('pong!');
+    execute(context: CommandContext) {
+        return;
     }
 }

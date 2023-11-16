@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import { type } from 'node:os';
 import path from 'node:path';
 import { ICommand } from './ICommand';
+import CommandContext from './commandContext';
 
 export class commandsManager {
 
@@ -20,24 +21,26 @@ export class commandsManager {
     public async seekCommand(message: Message) {
         //await message.delete();
 
-        const commandArgs: string[] = message.content.substring(1).split(' ');
-        const commandName = commandArgs[0];
+        const commandArgs: string[] = message.content.split(' ');
+        let commandName = commandArgs[0];
+        commandName = commandName.substring(1);
         delete commandArgs[0];
 
         this.commands.forEach((value, key) => {
             if (value.meta.name === commandName) {
-                value.execute(message, commandArgs);
+                const context = new CommandContext(message, value, commandArgs);
+                value.execute(context);
                 return;
             } else {
                 value.meta.aliases.forEach(v => {
                     if (v === commandName) {
-                       value.execute(message, commandArgs);
-                       return; 
+                        const context = new CommandContext(message, value, commandArgs);
+                        value.execute(context);
+                        return; 
                     }
                 })
             }
 
-            console.log(value.meta.name);
         })
     }
 }
