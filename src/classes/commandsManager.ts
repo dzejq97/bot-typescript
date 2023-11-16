@@ -5,7 +5,7 @@ import path from 'node:path';
 import { ICommand } from './ICommand';
 import CommandContext from './commandContext';
 
-export class commandsManager {
+export class CommandsManager {
 
     commands:Collection <string, ICommand>  = new Collection();
 

@@ -1,8 +1,10 @@
 import { Client, GatewayIntentBits, Collection } from 'discord.js';
-import { commandsManager } from './classes/commandsManager';
+import { CommandsManager } from './classes/commandsManager';
+import { DatabaseManager } from './classes/databaseManager';
 
-class botClient extends Client {
-    commands = new commandsManager();
+export class botClient extends Client {
+    commands = new CommandsManager();
+    database = new DatabaseManager();
 }
 
 const client = new botClient({
@@ -28,4 +30,4 @@ const client = new botClient({
         GatewayIntentBits.MessageContent ],
 });
 
-export = client;
+export default client;
