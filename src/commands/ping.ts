@@ -9,6 +9,5 @@ export const command: ICommand = {
     },
     execute(context: CommandContext) {
         context.directMessage.reply('Pong!');
-        console.log(context.arguments);
     }
 }

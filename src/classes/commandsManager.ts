@@ -23,7 +23,6 @@ export class commandsManager {
 
         let commandArgs: string[] = message.content.substring(1).split(' ');
         let commandName = commandArgs.shift()?.toLowerCase()
-        console.log(commandArgs)
 
         this.commands.forEach((value, key) => {
             if (value.meta.name === commandName) {

@@ -14,10 +14,8 @@ export const command: ICommand = {
 
         if(context.argumentIsMention(user)) {
             context.directMessage.reply(`Hello ${user}!`);
-            console.log('true');
         } else {
             context.directMessage.reply(`Mention user you want to greet.`);
-            console.log('false');
         }
     }
 }
