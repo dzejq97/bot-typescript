@@ -1,5 +1,6 @@
 import { Message, User } from 'discord.js';
 import { ICommand } from './ICommand';
+import client from 'src/client';
 
 export default class CommandContext {
     directMessage: Message;
@@ -16,6 +17,11 @@ export default class CommandContext {
     }
 
     argumentIsMention(arg: string) {
-        return;
+        if (arg == undefined) return false;
+
+        if (arg.startsWith('<@') && arg.endsWith('>'))
+            return true;
+        else
+            return false;
     }
 }
