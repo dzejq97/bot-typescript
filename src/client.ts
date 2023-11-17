@@ -3,8 +3,8 @@ import { CommandsManager } from './classes/commandsManager';
 import { DatabaseManager } from './classes/databaseManager';
 
 export class botClient extends Client {
-    commands = new CommandsManager();
-    database = new DatabaseManager();
+    commands = new CommandsManager(this);
+    database = new DatabaseManager(this);
 }
 
 const client = new botClient({

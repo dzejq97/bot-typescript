@@ -4,12 +4,16 @@ import { type } from 'node:os';
 import path from 'node:path';
 import { ICommand } from './ICommand';
 import CommandContext from './commandContext';
+import { botClient } from 'src/client';
 
 export class CommandsManager {
 
+    client: botClient;
     commands:Collection <string, ICommand>  = new Collection();
 
-    constructor() {
+    constructor(client: botClient) {
+        this.client = client;
+
         const commandsPath = path.join(__dirname, '/../commands');
         const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
         for (const file of commandFiles) {

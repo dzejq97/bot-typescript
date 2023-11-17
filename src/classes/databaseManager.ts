@@ -1,12 +1,16 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { Sequelize, DataTypes, Model} from "sequelize";
+import { Collection } from 'discord.js';
+import { botClient } from "src/client";
 import fs from 'node:fs';
 import path from 'node:path';
 
 export class DatabaseManager {
-
+    client: botClient;
     databaseConnection: Sequelize;
+    userCache: Collection<number, Model> = new Collection();
 
-    constructor() {
+    constructor(client: botClient) {
+        this.client = client;
         this.databaseConnection = new Sequelize({
             dialect: 'sqlite',
             storage: './database.sqlite'
@@ -30,5 +34,8 @@ export class DatabaseManager {
         }
     }
 
+    userInit() {
+        
+    }
 
 }
