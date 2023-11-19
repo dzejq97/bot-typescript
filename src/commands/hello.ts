@@ -8,9 +8,13 @@ export const command: ICommand = {
         description: "Say hi to someone!"
     },
     execute(context: CommandContext) {
-        //if (context.arguments.length == 0) return context.directMessage.reply('Mention user you want to greet');
-        console.log(context.arguments);
-        const user = context.arguments[0]
+        let user: string;
+
+        if (context.arguments[0]) {
+            user = context.arguments[0]
+        } else {
+            return context.directMessage.reply(`Mention user you want to greet.`)
+        }
 
         if(context.argumentIsMention(user)) {
             context.directMessage.reply(`Hello ${user}!`);
