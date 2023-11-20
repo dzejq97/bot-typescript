@@ -1,7 +1,18 @@
 Database:
 - add guild permissions role (admin, moderator, user etc.)
 - permissions functions for commandsManager
+- user reputation table and log
 
 Features:
-- moderation system
-- reputation points for users
+- moderation
+- users reputation points
+
+Commands:
+- moderation commands
+  - ban
+  - kick
+  - mute
+  - warn
+- reputation commands
+  - profile
+  - rep +
