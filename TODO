@@ -1,0 +1,7 @@
+Database:
+- add guild permissions role (admin, moderator, user etc.)
+- permissions functions for commandsManager
+
+Features:
+- moderation system
+- reputation points for users

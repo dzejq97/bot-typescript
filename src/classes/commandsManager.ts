@@ -1,6 +1,5 @@
 import { Collection, Message } from 'discord.js';
 import fs from 'node:fs';
-import { type } from 'node:os';
 import path from 'node:path';
 import { ICommand } from './ICommand';
 import CommandContext from './commandContext';
