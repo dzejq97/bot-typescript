@@ -3,6 +3,7 @@ import { token } from './config.json';
 import fs from "node:fs";
 import path from "node:path";
 
+//Loading events files
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.ts'));
 for (const file of eventFiles) {

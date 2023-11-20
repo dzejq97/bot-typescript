@@ -9,7 +9,6 @@ export const command: ICommand = {
     },
     execute(context: CommandContext) {
         let user: string;
-
         if (context.arguments[0]) {
             user = context.arguments[0]
         } else {
