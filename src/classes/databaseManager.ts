@@ -45,43 +45,51 @@ export class DatabaseManager {
     }
     
     async syncUsersAndGuilds() {
-        await this.client.guilds.fetch().then(fetchedGuilds => {
-            fetchedGuilds.forEach(async (OAGuild, id) => {
-                const guild = this.client.guilds.cache.get(id);
-                if (!await this.isGuildInDatabase(guild)) await this.addGuild(guild);
+        const fetchedGuilds = await this.client.guilds.fetch();
 
-                await guild?.members.fetch().then(fetchedMembers => {
-                    fetchedMembers.forEach(async (member, id) => {
-                        if (!await this.isUserInDatabase(member.user)) this.addUser(member.user);
-                    })
-                })
+        fetchedGuilds.forEach(async (OAGuild, id) => {
+            const guild = this.client.guilds.cache.get(id);
+            if (!await this.isGuildInDatabase(guild)) await this.addGuild(guild);
+
+            const members = await guild?.members.fetch();
+            members?.forEach(async (member, id) => {
+                if (!await this.isUserInDatabase(member.user)) this.addUser(member.user);
             })
         })
-        
     }
 
     async isUserInDatabase(user: User | null) {
         const model = this.databaseConnection.models['users'];
         if(!user) return false;
-
-        if (await model.findOne({
-            where: {
-                UserID: user.id,
-            }
-        })) return true;
-        return false; 
+        
+        try {
+            if (await model.findOne({
+                where: {
+                    UserID: user.id,
+                }
+            })) return true;
+            return false; 
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
     }
 
     async isGuildInDatabase(guild: Guild|undefined) {
         const model = this.databaseConnection.models['guilds'];
         if (!guild) return false;
 
-        if (await model.findOne({
-            where: {
-                GuildID: guild.id,
-            }
-        })) return true;
-        return false;
+        try {
+            if (await model.findOne({
+                where: {
+                    GuildID: guild.id,
+                }
+            })) return true;
+            return false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
     }
 
     async addGuild(guild: Guild|undefined) {
