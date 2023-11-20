@@ -28,16 +28,16 @@ export class CommandsManager {
         let commandArgs: string[] = message.content.substring(1).split(' ');
         let commandName = commandArgs.shift()?.toLowerCase()
 
-        this.commands.forEach((value, key) => {
-            if (value.meta.name === commandName) {
-                const context = new CommandContext(message, value, commandArgs);
-                value.execute(context);
+        this.commands.forEach((command, key) => {
+            if (command.meta.name === commandName) {
+                const context = new CommandContext(message, command, commandArgs);
+                command.execute(context);
                 return;
             } else {
-                value.meta.aliases.forEach(v => {
+                command.meta.aliases.forEach(v => {
                     if (v === commandName) {
-                        const context = new CommandContext(message, value, commandArgs);
-                        value.execute(context);
+                        const context = new CommandContext(message, command, commandArgs, commandName);
+                        command.execute(context);
                         return; 
                     }
                 })
