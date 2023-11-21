@@ -58,8 +58,8 @@ export class DatabaseManager {
     }
 
     async isUserInDatabase(user: User | null) {
-        const model = this.sequelize.models['users'];
         if(!user) return false;
+        const model = this.sequelize.models['users'];
         
         try {
             if (await model.findOne({
@@ -75,8 +75,8 @@ export class DatabaseManager {
     }
 
     async isGuildInDatabase(guild: Guild|undefined) {
-        const model = this.sequelize.models['guilds'];
         if (!guild) return false;
+        const model = this.sequelize.models['guilds'];
 
         try {
             if (await model.findOne({
@@ -98,6 +98,7 @@ export class DatabaseManager {
         const guildInstance = await model.create({
             GuildID: guild.id,
             JoinDate: new Date().toISOString(),
+            OwnerID: guild.ownerId,
         })
 
         if (!this.guildsCache.get(guild.id)) this.guildsCache.set(guild.id, guildInstance);
