@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes, Model} from "sequelize";
-import { Collection, User, Guild, ClientUser } from 'discord.js';
+import { Sequelize, Model} from "sequelize";
+import { Collection, User, Guild } from 'discord.js';
 import { botClient } from "src/client";
 import fs from 'node:fs';
 import path from 'node:path';
@@ -60,13 +60,17 @@ export class DatabaseManager {
     async isUserInDatabase(user: User | null) {
         if(!user) return false;
         const model = this.sequelize.models['users'];
-        
+
+        // check if user is in local cache
+        if (this.usersCache.find((m, id) => id === user.id)) return true;
+        // then seek in database
         try {
             if (await model.findOne({
                 where: {
                     UserID: user.id,
                 }
             })) return true;
+            
             return false; 
         } catch (error) {
             console.log(error);
