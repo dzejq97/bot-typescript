@@ -1,13 +1,13 @@
 import { DataTypes, ModelAttributes } from 'sequelize';
 
 export const modelAttr: ModelAttributes = {
-    UserID: {
+    ColumnName1: {
         type: DataTypes.STRING,
     },
-    JoinDate: {
+    ColumnName2: {
         type: DataTypes.DATE,
     },
-    Reputation: {
+    ColumnName3: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
     }

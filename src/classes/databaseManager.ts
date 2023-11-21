@@ -7,21 +7,21 @@ import { type } from "node:os";
 
 export class DatabaseManager {
     client: botClient;
-    databaseConnection: Sequelize;
+    sequelize: Sequelize;
     tables: any;
     usersCache: Collection<string, Model> = new Collection();
     guildsCache: Collection<string, Model> = new Collection();
 
     constructor(client: botClient) {
         this.client = client;
-        this.databaseConnection = new Sequelize({
+        this.sequelize = new Sequelize({
             dialect: 'sqlite',
             storage: './database.sqlite',
             logging: true, //Debug console logging
         })
 
         try {
-            this.databaseConnection.authenticate();
+            this.sequelize.authenticate();
             console.log('database connected');
         } catch (error) {
             console.log(error);
@@ -33,15 +33,15 @@ export class DatabaseManager {
         for (const file of modelFiles) {
             const fileDir = path.join(modelsDir, file);
             const model = require(fileDir);
-            this.databaseConnection.define(file.substring(0, file.length - 3), model);
+            this.sequelize.define(file.substring(0, file.length - 3), model);
             console.log(`Database model ${file} loaded!`)
         }
-        this.tables = this.databaseConnection.models;
+        this.tables = this.sequelize.models;
         this.syncDatabase();
     }
     
     async syncDatabase(){
-        await this.databaseConnection.sync();
+        await this.sequelize.sync();
     }
     
     async syncUsersAndGuilds() {
@@ -59,7 +59,7 @@ export class DatabaseManager {
     }
 
     async isUserInDatabase(user: User | null) {
-        const model = this.databaseConnection.models['users'];
+        const model = this.sequelize.models['users'];
         if(!user) return false;
         
         try {
@@ -76,7 +76,7 @@ export class DatabaseManager {
     }
 
     async isGuildInDatabase(guild: Guild|undefined) {
-        const model = this.databaseConnection.models['guilds'];
+        const model = this.sequelize.models['guilds'];
         if (!guild) return false;
 
         try {
@@ -95,7 +95,7 @@ export class DatabaseManager {
     async addGuild(guild: Guild|undefined) {
         if (!guild) return console.error('failed to create database entry');
 
-        const model = this.databaseConnection.models['guilds'];
+        const model = this.sequelize.models['guilds'];
         const guildInstance = await model.create({
             GuildID: guild.id,
             JoinDate: new Date().toISOString(),
@@ -107,7 +107,7 @@ export class DatabaseManager {
     async addUser(user: User | null) {
         if(!user) return console.error('Failed to create database entry');
 
-        const model = this.databaseConnection.models['users'];
+        const model = this.sequelize.models['users'];
         const userInstance = await model.create({
             UserID: user.id,
             JoinDate: new Date().toISOString(),
