@@ -1,6 +1,7 @@
 import { Message, User, GuildMember } from 'discord.js';
 import { ICommand } from './ICommand';
 import client from '../client';
+import { EmbedsManager } from './embedsManager';
 
 export default class CommandContext {
     directMessage: Message;
@@ -9,6 +10,7 @@ export default class CommandContext {
     arguments: string[];
     usedAlias: string | undefined;
     client = client;
+    embeds = new EmbedsManager();
 
     constructor(message: Message, command:ICommand, args: string[], usedAlias?: string) {
         this.directMessage = message;
