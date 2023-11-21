@@ -1,9 +1,8 @@
 import { Sequelize, DataTypes, Model} from "sequelize";
 import { Collection, User, Guild, ClientUser } from 'discord.js';
 import { botClient } from "src/client";
-import fs, { Mode } from 'node:fs';
+import fs from 'node:fs';
 import path from 'node:path';
-import { type } from "node:os";
 
 export class DatabaseManager {
     client: botClient;
@@ -32,7 +31,7 @@ export class DatabaseManager {
         const modelFiles = fs.readdirSync(modelsDir).filter(file => file.endsWith('.ts'));
         for (const file of modelFiles) {
             const fileDir = path.join(modelsDir, file);
-            const model = require(fileDir);
+            const model = require(fileDir).modelAttr;
             this.sequelize.define(file.substring(0, file.length - 3), model);
             console.log(`Database model ${file} loaded!`)
         }

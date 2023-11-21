@@ -13,12 +13,19 @@ export class CommandsManager {
     constructor(client: botClient) {
         this.client = client;
 
-        const commandsPath = path.join(__dirname, '/../commands');
-        const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
-        for (const file of commandFiles) {
-            const filePath = path.join(commandsPath, file);
-            const command = require(filePath).command;
-            this.commands.set(command.meta.name, command);        }
+        const categoriesPath = path.join(__dirname, '/../commands');
+        const categoriesFolders = fs.readdirSync(categoriesPath).filter(file => !file.endsWith('.txt'));
+        console.log(categoriesFolders)
+        for (const category of categoriesFolders) {
+            const commandsPath = path.join(categoriesPath, category);
+            const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts'));
+            for (const file of commandFiles) {
+                const filePath = path.join(commandsPath, file);
+                const command:ICommand = require(filePath).command;
+                command.meta.category = category;
+                this.commands.set(command.meta.name, command);
+            }
+        }
     }
 
     public async seekCommand(message: Message) {
