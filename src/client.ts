@@ -1,8 +1,10 @@
 import { Client, GatewayIntentBits, Collection } from 'discord.js';
 import { CommandsManager } from './classes/commandsManager';
 import { DatabaseManager } from './classes/databaseManager';
+import { prefix } from './config.json'
 
 export class botClient extends Client {
+    prefix = prefix
     commands = new CommandsManager(this);
     database = new DatabaseManager(this);
 }

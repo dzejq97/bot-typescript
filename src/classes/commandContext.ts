@@ -1,4 +1,4 @@
-import { Message, User } from 'discord.js';
+import { Message, User, GuildMember } from 'discord.js';
 import { ICommand } from './ICommand';
 import client from '../client';
 
@@ -27,5 +27,15 @@ export default class CommandContext {
             return true;
         else
             return false;
+    }
+
+    verifyPermissions(): boolean {
+        if (!this.directMessage.member) return false;
+        if (this.command.meta.requiredPermissions === undefined) return true;
+
+        for (const permission of this.command.meta.requiredPermissions) {
+            if (!this.directMessage.member.permissions.has(permission)) return false;
+        }
+        return true;
     }
 }

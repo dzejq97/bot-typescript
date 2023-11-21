@@ -6,17 +6,8 @@ export const modelAttr: ModelAttributes = {
         allowNull: false,
         primaryKey: true,
     },
-    OwnerID: {
+    OwnersID: {
         type: DataTypes.STRING
-    },
-    Roles_RootPermissions: {
-        type: DataTypes.STRING,
-    },
-    Roles_AdminPermissions: {
-        type: DataTypes.STRING,
-    },
-    Roles_ModeratorPermissions: {
-        type: DataTypes.STRING,
     },
     JoinDate: {
         type: DataTypes.DATE,

@@ -1,4 +1,4 @@
-import { Collection, Message } from 'discord.js';
+import { Collection, Message, GuildMember } from 'discord.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { ICommand } from './ICommand';
@@ -28,10 +28,10 @@ export class CommandsManager {
         }
     }
 
-    public async seekCommand(message: Message) {
+    async seekCommand(message: Message) {
         //await message.delete();
 
-        let commandArgs: string[] = message.content.substring(1).split(' ');
+        let commandArgs: string[] = message.content.substring(this.client.prefix.length).split(' ');
         let commandName = commandArgs.shift()?.toLowerCase()
 
         this.commands.forEach((command, key) => {
@@ -51,4 +51,5 @@ export class CommandsManager {
 
         })
     }
+
 }
